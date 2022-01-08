@@ -30,7 +30,7 @@ const App = () => {
 
   return (
     <div>
-      <h2><center>Buying List</center></h2>
+      <h2><center>Portfolio</center></h2>
       <Expenses array = {expenses} />
     </div>
   );
