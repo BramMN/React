@@ -4,9 +4,7 @@ import MealItemForm from "./MealItemForm";
 import CartContext from "../../../store/cart-context";
 
 const MealItem = (props) => {
-  console.log(props.price)
   const ctx = useContext(CartContext);
-  console.log(ctx)
   const price = `$${props.price.toFixed(2)}`;
 
   const addToCartHandler = (amount) => {
