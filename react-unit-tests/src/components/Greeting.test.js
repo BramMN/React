@@ -38,7 +38,7 @@ describe("Greeting Component", () => {
     const buttonElement = screen.getByRole("button")
     userEvent.click(buttonElement)
 
-    const outputElement = screen.queryByText("good to see you!", { exact: false })
+    const outputElement = screen.queryByText("good to see you!")
     expect(outputElement).toBeNull()
   })
 })
