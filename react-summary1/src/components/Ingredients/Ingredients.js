@@ -30,7 +30,11 @@ const Ingredients = () => {
   }
 
   const removeIngredientHandler = id => {
-    setUserIngredients(prevState => prevState.filter(el => id !== el.id))
+    fetch(process.env.REACT_APP_API_KEY_DELETE + id + ".json", {
+      method: "DELETE",
+    }).then(response => {
+      setUserIngredients(prevState => prevState.filter(el => id !== el.id))
+    })
   }
 
   return (
