@@ -7,9 +7,9 @@ import IngredientList from "./IngredientList"
 const Ingredients = () => {
   const [userIngredients, setUserIngredients] = useState([])
 
-  useEffect(() => {
-    console.log("render")
-  })
+  // useEffect(() => {
+  //   console.log("render")
+  // })
 
   const filteredIngredientsHandler = useCallback(filteredIngredients => {
     setUserIngredients(filteredIngredients)
