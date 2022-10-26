@@ -22,15 +22,19 @@ const ingredientReducer = (state, action) => {
 
 
 const Ingredients = () => {
-  const { isLoading, error, data, sendRequest } = useHTTP()
+  const { isLoading, error, data, sendRequest, reqExtra, reqIdentifier } = useHTTP()
   const [userIngredients, dispatch] = useReducer(ingredientReducer, [])
   //const [userIngredients, setUserIngredients] = useState([])
   //const [isLoading, setIsLoading] = useState(false)
   //const [error, setError] = useState(null)
 
   useEffect(() => {
-    console.log("render")
-  })
+    if (!isLoading && !error && reqIdentifier === "REMOVE_INGREDIENT") {
+      dispatch({ type: "DELETE", id: reqExtra })
+    } else if (!isLoading && !error && reqIdentifier === "ADD_INGREDIENT") {
+      dispatch({ type: "ADD", ingredient: { id: data.name, ...reqExtra } })
+    }
+  }, [data, error, isLoading, reqExtra, reqIdentifier])
 
   const filteredIngredientsHandler = useCallback(filteredIngredients => {
     //setUserIngredients(filteredIngredients)
@@ -38,6 +42,7 @@ const Ingredients = () => {
   }, [])
 
   const addIngredientHandler = useCallback(ingredient => {
+    sendRequest(process.env.REACT_APP_API_KEY, "POST", JSON.stringify(ingredient), ingredient, "ADD_INGREDIENT")
     // dispatchHttp({ type: "SEND" })
     // fetch(process.env.REACT_APP_API_KEY, {
     //   method: "POST",
@@ -55,7 +60,7 @@ const Ingredients = () => {
   }, [])
 
   const removeIngredientHandler = useCallback(id => {
-    sendRequest(process.env.REACT_APP_API_KEY_DELETE + id + ".json", "DELETE")
+    sendRequest(process.env.REACT_APP_API_KEY_DELETE + id + ".json", "DELETE", null, id, "REMOVE_INGREDIENT")
   }, [sendRequest])
 
   const clearError = useCallback(() => {
