@@ -22,11 +22,8 @@ const ingredientReducer = (state, action) => {
 
 
 const Ingredients = () => {
-  const { isLoading, error, data, sendRequest, reqExtra, reqIdentifier } = useHTTP()
+  const { isLoading, error, data, sendRequest, reqExtra, reqIdentifier, clear } = useHTTP()
   const [userIngredients, dispatch] = useReducer(ingredientReducer, [])
-  //const [userIngredients, setUserIngredients] = useState([])
-  //const [isLoading, setIsLoading] = useState(false)
-  //const [error, setError] = useState(null)
 
   useEffect(() => {
     if (!isLoading && !error && reqIdentifier === "REMOVE_INGREDIENT") {
@@ -37,35 +34,16 @@ const Ingredients = () => {
   }, [data, error, isLoading, reqExtra, reqIdentifier])
 
   const filteredIngredientsHandler = useCallback(filteredIngredients => {
-    //setUserIngredients(filteredIngredients)
     dispatch({ type: "SET", ingredients: filteredIngredients })
   }, [])
 
   const addIngredientHandler = useCallback(ingredient => {
     sendRequest(process.env.REACT_APP_API_KEY, "POST", JSON.stringify(ingredient), ingredient, "ADD_INGREDIENT")
-    // dispatchHttp({ type: "SEND" })
-    // fetch(process.env.REACT_APP_API_KEY, {
-    //   method: "POST",
-    //   body: JSON.stringify(ingredient),
-    //   headers: { "Content-Type": "application/json" },
-    // })
-    //   .then(response => {
-    //     dispatchHttp({ type: "RESPONSE" })
-    //     return response.json()
-    //   })
-    //   .then(responseData => {
-    //     //setUserIngredients(prevState => [...prevState, { id: responseData.name, ...ingredient }])
-    //     dispatch({ type: "ADD", ingredient: { id: responseData.name, ...ingredient } })
-    //   })
-  }, [])
+  }, [sendRequest])
 
   const removeIngredientHandler = useCallback(id => {
     sendRequest(process.env.REACT_APP_API_KEY_DELETE + id + ".json", "DELETE", null, id, "REMOVE_INGREDIENT")
   }, [sendRequest])
-
-  const clearError = useCallback(() => {
-    //dispatchHttp({ type: "CLEAR" })
-  }, [])
 
   const ingredientList = useMemo(() => {
     return <IngredientList ingredients={userIngredients} onRemoveItem={removeIngredientHandler} />
@@ -73,7 +51,7 @@ const Ingredients = () => {
 
   return (
     <div className="App">
-      {error && <ErrorModal onClose={clearError}>{error}</ErrorModal>}
+      {error && <ErrorModal onClose={clear}>{error}</ErrorModal>}
 
       <IngredientForm onAddIngredient={addIngredientHandler} loading={isLoading} />
 
