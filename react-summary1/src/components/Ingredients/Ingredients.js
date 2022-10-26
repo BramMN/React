@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect, useCallback } from "react"
+import React, { useReducer, useEffect, useCallback, useMemo } from "react"
 
 import IngredientForm from "./IngredientForm"
 import IngredientList from "./IngredientList"
@@ -25,10 +25,10 @@ const httpReducer = (state, action) => {
     case "RESPONSE":
       return { ...state, loading: false }
     case "ERROR":
-      return { loading: false, error: action.errorMessage}
+      return { loading: false, error: action.errorMessage }
     case "CLEAR":
       return { ...state, error: null }
-    default: 
+    default:
       throw new Error("Should not get here!")
   }
 }
@@ -49,7 +49,7 @@ const Ingredients = () => {
     dispatch({ type: "SET", ingredients: filteredIngredients })
   }, [])
 
-  const addIngredientHandler = ingredient => {
+  const addIngredientHandler = useCallback(ingredient => {
     dispatchHttp({ type: "SEND" })
     fetch(process.env.REACT_APP_API_KEY, {
       method: "POST",
@@ -64,9 +64,9 @@ const Ingredients = () => {
         //setUserIngredients(prevState => [...prevState, { id: responseData.name, ...ingredient }])
         dispatch({ type: "ADD", ingredient: { id: responseData.name, ...ingredient } })
       })
-  }
+  }, [])
 
-  const removeIngredientHandler = id => {
+  const removeIngredientHandler = useCallback(id => {
     dispatchHttp({ type: "SEND" })
     fetch(process.env.REACT_APP_API_KEY_DELETE + id + ".json", {
       method: "DELETE",
@@ -79,11 +79,15 @@ const Ingredients = () => {
       .catch(error => {
         dispatchHttp({ type: "ERROR", errorMessage: error.message })
       })
-  }
+  }, [])
 
-  const clearError = () => {
+  const clearError = useCallback(() => {
     dispatchHttp({ type: "CLEAR" })
-  }
+  }, [])
+
+  const ingredientList = useMemo(() => {
+    return <IngredientList ingredients={userIngredients} onRemoveItem={removeIngredientHandler} />
+  }, [removeIngredientHandler, userIngredients])
 
   return (
     <div className="App">
@@ -93,7 +97,7 @@ const Ingredients = () => {
 
       <section>
         <Search onLoadIngredients={filteredIngredientsHandler} />
-        <IngredientList ingredients={userIngredients} onRemoveItem={removeIngredientHandler} />
+        {ingredientList}
       </section>
     </div>
   )
