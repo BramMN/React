@@ -1,12 +1,26 @@
-import React, { useState, useEffect, useCallback } from "react"
+import React, { useReducer, useState, useEffect, useCallback } from "react"
 
 import IngredientForm from "./IngredientForm"
 import IngredientList from "./IngredientList"
 import ErrorModal from "../UI/ErrorModal"
 import Search from "./Search"
 
+const ingredientReducer = (state, action) => {
+  switch (action.type) {
+    case "SET":
+      return action.ingredients
+    case "ADD":
+      return [...state, action.ingredient]
+    case "DELETE":
+      return state.filter(el => el.id !== action.id)
+    default:
+      throw new Error("Should not get here!")
+  }
+}
+
 const Ingredients = () => {
-  const [userIngredients, setUserIngredients] = useState([])
+  const [userIngredients, dispatch] = useReducer(ingredientReducer, [])
+  //const [userIngredients, setUserIngredients] = useState([])
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState(null)
 
@@ -15,7 +29,8 @@ const Ingredients = () => {
   })
 
   const filteredIngredientsHandler = useCallback(filteredIngredients => {
-    setUserIngredients(filteredIngredients)
+    //setUserIngredients(filteredIngredients)
+    dispatch({ type: "SET", ingredients: filteredIngredients })
   }, [])
 
   const addIngredientHandler = ingredient => {
@@ -30,7 +45,8 @@ const Ingredients = () => {
         return response.json()
       })
       .then(responseData => {
-        setUserIngredients(prevState => [...prevState, { id: responseData.name, ...ingredient }])
+        //setUserIngredients(prevState => [...prevState, { id: responseData.name, ...ingredient }])
+        dispatch({ type: "ADD", ingredient: { id: responseData.name, ...ingredient } })
       })
   }
 
@@ -41,7 +57,8 @@ const Ingredients = () => {
     })
       .then(response => {
         setIsLoading(false)
-        setUserIngredients(prevState => prevState.filter(el => id !== el.id))
+        //setUserIngredients(prevState => prevState.filter(el => id !== el.id))
+        dispatch({ type: "DELETE", id: id })
       })
       .catch(error => {
         setError(error.message)
