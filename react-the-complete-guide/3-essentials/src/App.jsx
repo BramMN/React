@@ -1,5 +1,5 @@
 import reactImg from "./assets/react-core-concepts.png"
-import componentsImg from "./assets/components.png"
+import { CORE_CONCEPTS } from "./data"
 
 const reactDescriptions = ["Fundamental", "Crucial", "Core"]
 
@@ -43,14 +43,10 @@ function App() {
         <section id="core-concepts">
           <h2>Core Concepts</h2>
           <ul>
-            <CoreConcept
-              title="Components"
-              description="The core UI building block."
-              image={componentsImg}
-            />
-            <CoreConcept title="Props" />
-            <CoreConcept />
-            <CoreConcept />
+            <CoreConcept {...CORE_CONCEPTS[0]} />
+            <CoreConcept {...CORE_CONCEPTS[1]} />
+            <CoreConcept {...CORE_CONCEPTS[2]} />
+            <CoreConcept {...CORE_CONCEPTS[3]} />
           </ul>
         </section>
       </main>
