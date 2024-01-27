@@ -7,17 +7,17 @@ const initialGameBoard = [
 ]
 
 export function GameBoard({ onSelectSquare, activePlayerSymbol }) {
-  const [gameBoard, setGameBoard] = useState(initialGameBoard)
+  // const [gameBoard, setGameBoard] = useState(initialGameBoard)
 
-  function handleCellClick(rowIndex, cellIndex) {
-    setGameBoard(prevGameBoard => {
-      const updatedBoard = [...prevGameBoard.map(innerArray => [...innerArray])]
-      updatedBoard[rowIndex][cellIndex] = activePlayerSymbol
-      return updatedBoard
-    })
+  // function handleCellClick(rowIndex, cellIndex) {
+  //   setGameBoard(prevGameBoard => {
+  //     const updatedBoard = [...prevGameBoard.map(innerArray => [...innerArray])]
+  //     updatedBoard[rowIndex][cellIndex] = activePlayerSymbol
+  //     return updatedBoard
+  //   })
 
-    onSelectSquare()
-  }
+  //   onSelectSquare()
+  // }
 
   return (
     <ol id="game-board">
