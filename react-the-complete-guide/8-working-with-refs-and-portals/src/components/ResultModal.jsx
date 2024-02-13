@@ -31,6 +31,7 @@ export const ResultModal = forwardRef(function ResultModal({ targetTime, remaini
       <form
         method="dialog"
         onSubmit={onReset}
+        onClose={onReset}
       >
         <button>Close</button>
       </form>
