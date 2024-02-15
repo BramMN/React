@@ -12,7 +12,7 @@ export function Input({ label, textarea, ...props }) {
         <input
           className={classes}
           {...props}
-        ></input>
+        />
       )}
     </p>
   )
