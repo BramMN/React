@@ -6,7 +6,7 @@ import { SelectedProject } from "./components/SelectedProject"
 
 function App() {
   const [projectsState, setProjectsState] = useState({
-    selectedProject: undefined,
+    selectedProjectId: undefined,
     projects: [],
   })
 
@@ -14,7 +14,7 @@ function App() {
     setProjectsState(prevState => {
       return {
         ...prevState,
-        selectedProject: id,
+        selectedProjectId: id,
       }
     })
   }
@@ -23,7 +23,7 @@ function App() {
     setProjectsState(prevState => {
       return {
         ...prevState,
-        selectedProject: null,
+        selectedProjectId: null,
       }
     })
   }
@@ -32,7 +32,7 @@ function App() {
     setProjectsState(prevState => {
       return {
         ...prevState,
-        selectedProject: undefined,
+        selectedProjectId: undefined,
       }
     })
   }
@@ -46,24 +46,34 @@ function App() {
 
       return {
         ...prevState,
-        selectedProject: undefined,
+        selectedProjectId: undefined,
         projects: [...prevState.projects, newProject],
       }
     })
   }
 
-  const selectedProject = projectsState.projects.find(project => project.id === projectsState.selectedProject)
+  function handleDeleteProject() {
+    setProjectsState(prevState => {
+      return {
+        ...prevState,
+        selectedProjectId: undefined,
+        projects: prevState.projects.filter(project => project.id !== prevState.selectedProjectId),
+      }
+    })
+  }
 
-  let content = <SelectedProject project={selectedProject} />
+  const selectedProjectId = projectsState.projects.find(project => project.id === projectsState.selectedProjectId)
 
-  if (projectsState.selectedProject === null) {
+  let content = <SelectedProject project={selectedProjectId} onDelete={handleDeleteProject} />
+
+  if (projectsState.selectedProjectId === null) {
     content = (
       <NewProject
         onAdd={handleAddProject}
         onCancel={handleCancelAddProject}
       />
     )
-  } else if (projectsState.selectedProject === undefined) {
+  } else if (projectsState.selectedProjectId === undefined) {
     content = <NoProjectSelected onStartAddProject={handleStartAddProject} />
   }
 
