@@ -18,7 +18,7 @@ export function Tasks({ tasks, onAdd, onDelete }) {
                 className="text-stone-700 hover:text-red-500"
                 onClick={() => onDelete(task.id)}
               >
-                Delete
+                Clear
               </button>
             </li>
           ))}
