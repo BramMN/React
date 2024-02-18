@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 
-export function QuestionTimer({ timeout, onTimeout }) {
+export function QuestionTimer({ timeout, onTimeout, mode }) {
   const [remainingTime, setRemainingTime] = useState(timeout)
 
   useEffect(() => {
@@ -26,6 +26,7 @@ export function QuestionTimer({ timeout, onTimeout }) {
       id="question-time"
       max={timeout}
       value={remainingTime}
+      className={mode}
     />
   )
 }
