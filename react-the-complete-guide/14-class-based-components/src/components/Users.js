@@ -21,11 +21,14 @@ class Users extends Component {
     const usersList = (
       <ul>
         {this.props.users.map(user => (
-          <User key={user.id} name={user.name} />
+          <User
+            key={user.id}
+            name={user.name}
+          />
         ))}
       </ul>
     )
-    
+
     return (
       <div className={classes.users}>
         <button onClick={this.toggleUsersHandler.bind(this)}>{this.state.showUsers ? "Hide" : "Show"} Users</button>
