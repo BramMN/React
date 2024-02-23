@@ -21,5 +21,5 @@ export function useFetch(fetchFn, initialValue) {
     fetchData()
   }, [fetchFn])
 
-  return { data, isFetching, error }
+  return { data, isFetching, error, setData }
 }
