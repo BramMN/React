@@ -3,7 +3,7 @@ import { currencyFormatter } from "../util/formatting"
 import { Button } from "./UI/Button"
 import { CartContext } from "../store/CartContext"
 
-export function MealItem({ name, description, price, image }) {
+export function MealItem({ name, description, price, image, id }) {
   const cartCtx = useContext(CartContext)
 
   function handleAddMealToCart() {
@@ -12,6 +12,7 @@ export function MealItem({ name, description, price, image }) {
       description,
       price,
       image,
+      id,
     })
   }
 
