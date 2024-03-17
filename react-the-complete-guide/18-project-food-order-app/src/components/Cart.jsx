@@ -16,6 +16,10 @@ export function Cart() {
     userProgressCtx.hideCart()
   }
 
+  function handleGoToCheckout() {
+    userProgressCtx.showCheckout()
+  }
+
   return (
     <Modal
       className="cart"
@@ -31,7 +35,7 @@ export function Cart() {
             quantity={item.quantity}
             price={item.price}
             onIncrease={() => cartCtx.addItem(item)}
-            onDecrease={() => cartCtx.removeItem(item)}
+            onDecrease={() => cartCtx.removeItem(item.id)}
           />
         ))}
       </ul>
@@ -43,7 +47,7 @@ export function Cart() {
         >
           Close
         </Button>
-        {cartCtx.items.length > 0 && <Button onClick={handleCloseCart}>Go to checkout</Button>}
+        {cartCtx.items.length > 0 && <Button onClick={handleGoToCheckout}>Go to checkout</Button>}
       </p>
     </Modal>
   )

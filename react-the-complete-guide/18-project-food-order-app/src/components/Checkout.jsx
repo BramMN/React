@@ -9,14 +9,11 @@ import { UserProgressContext } from "../store/UserProgressContext"
 export function Checkout() {
   const cartCtx = useContext(CartContext)
   const userProgressCtx = useContext(UserProgressContext)
+  console.log(cartCtx, userProgressCtx)
   const cartTotal = cartCtx.items.reduce((acc, item) => acc + item.quantity * item.price, 0)
 
   function handleClose() {
     userProgressCtx.hideCheckout()
-  }
-
-  function handleGoToCheckout() {
-    userProgressCtx.showCheckout()
   }
 
   function handleSubmit(event) {
@@ -71,7 +68,7 @@ export function Checkout() {
           >
             Close
           </Button>
-          <Button onClick={handleGoToCheckout}>Submit Order</Button>
+          <Button>Submit Order</Button>
         </p>
       </form>
     </Modal>
