@@ -20,6 +20,7 @@ export function Cart() {
     <Modal
       className="cart"
       open={userProgressCtx.progress === "cart"}
+      onClose={userProgressCtx.progress === "cart" ? handleCloseCart : null}
     >
       <h2>Your Cart</h2>
       <ul>
@@ -42,7 +43,7 @@ export function Cart() {
         >
           Close
         </Button>
-        <Button onClick={handleCloseCart}>Go to checkout</Button>
+        {cartCtx.items.length > 0 && <Button onClick={handleCloseCart}>Go to checkout</Button>}
       </p>
     </Modal>
   )
