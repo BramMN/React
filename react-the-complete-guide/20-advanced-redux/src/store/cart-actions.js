@@ -4,7 +4,7 @@ import { cartActions } from "./cart-slice"
 export const fetchCartData = () => {
   return async dispatch => {
     const fetchData = async () => {
-      const response = await fetch("")
+      const response = await fetch(process.env.REACT_APP_FIREBASE_URL)
 
       if (!response.ok) {
         throw new Error("Could not fetch cart data")
@@ -27,8 +27,8 @@ export const fetchCartData = () => {
       dispatch(
         uiActions.showNotificaion({
           status: "error",
-          title: "error",
-          message: "fetching cart data failed",
+          title: "Error",
+          message: "Fetching cart data failed",
         })
       )
     }
@@ -40,13 +40,13 @@ export const sendCartData = cart => {
     dispatch(
       uiActions.showNotificaion({
         status: "pending",
-        title: "sending...",
-        message: "sending cart data",
+        title: "Sending...",
+        message: "Sending cart data",
       })
     )
 
     const sendRequest = async () => {
-      const response = await fetch("", {
+      const response = await fetch(process.env.REACT_APP_FIREBASE_URL, {
         method: "PUT",
         body: JSON.stringify({ items: cart.items, totalQuantity: cart.totalQuantity }),
       })
@@ -62,16 +62,16 @@ export const sendCartData = cart => {
       dispatch(
         uiActions.showNotificaion({
           status: "success",
-          title: "success",
-          message: "sent cart data successfully",
+          title: "Success",
+          message: "Sent cart data successfully",
         })
       )
     } catch (error) {
       dispatch(
         uiActions.showNotificaion({
           status: "error",
-          title: "error",
-          message: "sending cart data failed",
+          title: "Error",
+          message: "Sending cart data failed!",
         })
       )
     }
