@@ -6,9 +6,7 @@ const Header = () => {
   const dispatch = useDispatch()
   const isAuth = useSelector(state => state.auth.isAuthenticated)
 
-  const logoutHandler = (event) => {
-    event.preventDefault()
-
+  const logoutHandler = () => {
     dispatch(authActions.logout())
   }
 
@@ -19,10 +17,10 @@ const Header = () => {
         <nav>
           <ul>
             <li>
-              <a href='/'>My Products</a>
+              <a href="/">My Products</a>
             </li>
             <li>
-              <a href='/'>My Sales</a>
+              <a href="/">My Sales</a>
             </li>
             <li>
               <button onClick={logoutHandler}>Logout</button>
